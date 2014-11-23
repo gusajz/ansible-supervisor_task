@@ -10,7 +10,13 @@ numprocs={{ numprocs }}
 stderr_logfile=/var/log/{{name}}.err.log
 stdout_logfile=/var/log/{{name}}.out.log
 
+{% if stopasgroup %}stopasgroup={{ stopasgroup }}{% endif %}
+
+{% if killasgroup %}killasgroup={{ killasgroup }}{% endif %}
+
+
 {% if stopsignal %}stopsignal={{ stopsignal }}{% endif %}
+
 {% if env_vars|length > 0 %}
 environment={% for name, value in env_vars.iteritems() %}{{ name }}="{{ value }}"{% if not loop.last %},{% endif %}{% endfor %}
 {% endif %}
