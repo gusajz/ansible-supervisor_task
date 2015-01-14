@@ -3,6 +3,18 @@
   # update_cache=true
   sudo: yes
 
+- name: be sure supervisord is configured
+  sudo: true
+  template: src=supervisord.conf.j2 dest=/etc/supervisor/supervisord.conf backup=yes force=yes
+  notify:
+    - restart supervisord
+  tags: supervisord_conf
+
+- name: be sure supervisord is running and enabled
+  service: name=supervisor state=running enabled=yes
+  sudo: true
+
+
 - name: installing task {{ name }}
   template: src=task.conf.j2 dest={{ supervisor_config_dir }}/{{ name }}.conf
   sudo: yes
